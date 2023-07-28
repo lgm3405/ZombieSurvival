@@ -23,43 +23,26 @@ public class ResourceManager : MonoBehaviour
         }
     }
 
-    //private string dataPath = default;
-
-
     private static string zombieDataPath = default;
     public ZombieData zombieData_default = default;
 
+    public List<ZombieData> zombieDatas = default;
+
     private void Awake()
     {
-        zombieDataPath = "Scriptables";
-        zombieDataPath = string.Format("{0}/{1}", zombieDataPath, "zombie Data Default");
+        zombieDatas = new List<ZombieData>();
 
-        zombieData_default = Resources.Load<ZombieData>(zombieDataPath);
+        zombieDataPath = "ZombieDatas";
+        zombieDataPath = string.Format("{0}/{1}", zombieDataPath, "ZombieDatasFile");
 
-        Debug.LogFormat("게임 Save data 를 여기에다가 저장하는 것이 상식이다. -> {0}", Application.persistentDataPath);
+        TextAsset csvZombieData = Resources.Load<TextAsset>(zombieDataPath);
 
-        //dataPath = Application.dataPath;
-        //zombieDataPath = string.Format("{0}/{1}", Application.dataPath, "01.UnityProject/Scriptables");
-
-        //byte[] byteZombieData = File.ReadAllBytes(zombieDataPath + "/Zombie Data Default");
-
-        //Debug.LogFormat("Data path : {0}", zombieDataPath);
-
-        //zombieData_default = AssetDatabase.LoadAssetAtPath<ZombieData>(zombieDataPath);
-        //ZombieData zombieData_ = Resources.Load<ZombieData>(zombieDataPath);
-
-        //Debug.LogFormat("zombie data path: {0}", zombieDataPath);
-        //Debug.LogFormat("zombie data: {0}, {1}, {2}", zombieData_.health, zombieData_.damage, zombieData_.speed);
-
-    }
-
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
+        string[] zombieDatas_str = csvZombieData.text.Split('\n');
+        ZombieData loadZombieData = default;
+        for(int i = 1; i < zombieDatas_str.Length; i++)
+        {
+            loadZombieData = new ZombieData(zombieDatas_str[i]);
+            zombieDatas.Add(loadZombieData);
+        }
     }
 }
