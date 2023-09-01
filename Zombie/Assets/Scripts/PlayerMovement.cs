@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour {
         Move();
 
         playerAnimator.SetFloat("Move", playerInput.move);
+        Debug.Log(playerInput.move);
     }
 
     // 입력값에 따라 캐릭터를 앞뒤로 움직임
